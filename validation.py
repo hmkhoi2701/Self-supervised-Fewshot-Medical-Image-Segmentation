@@ -63,6 +63,9 @@ def main(_run, _config, _log):
     elif data_name == 'CHAOST2_Superpix':
         baseset_name = 'CHAOST2'
         max_label = 4
+    elif data_name == 'CURVAS_Superpix':
+        baseset_name = 'CURVAS'
+        max_label = 3
     else:
         raise ValueError(f'Dataset: {data_name} not found')
 
@@ -103,7 +106,8 @@ def main(_run, _config, _log):
         act_labels=test_labels,
         npart = _config['task']['npart'],
         nsup = _config['task']['n_shots'],
-        extern_normalize_func = norm_func
+        extern_normalize_func = norm_func,
+        rater_id=_config["rater_id"]
     )
 
     ### dataloaders
@@ -183,7 +187,7 @@ def main(_run, _config, _log):
                     if _config['dataset'] != 'C0':
                         _lb_buffer[_scan_id] = _pred.transpose(2,0,1) # H, W, Z -> to Z H W
                     else:
-                        lb_buffer[_scan_id] = _pred
+                        _lb_buffer[_scan_id] = _pred
 
             save_pred_buffer[str(curr_lb)] = _lb_buffer
 

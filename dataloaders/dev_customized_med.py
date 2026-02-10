@@ -221,7 +221,7 @@ def update_loader_dset(loader, parent_set):
     loader.dataset.update_index()
     print(f'###### Loader and dataset have been updated ######' )
 
-def med_fewshot_val(dataset_name, base_dir, idx_split, scan_per_load, act_labels, npart, fix_length = None, nsup = 1, **kwargs):
+def med_fewshot_val(dataset_name, base_dir, idx_split, scan_per_load, act_labels, npart, fix_length = None, nsup = 1, rater_id = None, **kwargs):
     """
     validation set for med images
     Args:
@@ -242,7 +242,7 @@ def med_fewshot_val(dataset_name, base_dir, idx_split, scan_per_load, act_labels
         npart: number of chunks for splitting a 3d volume
         nsup:  number of support scans, equivalent to nshot
     """
-    mydataset = ManualAnnoDataset(which_dataset = dataset_name, base_dir=base_dir, idx_split = idx_split, mode = 'val', scan_per_load = scan_per_load, transforms=None, min_fg = 1, fix_length = fix_length, nsup = nsup, **kwargs)
+    mydataset = ManualAnnoDataset(which_dataset = dataset_name, base_dir=base_dir, idx_split = idx_split, mode = 'val', scan_per_load = scan_per_load, transforms=None, min_fg = 1, fix_length = fix_length, nsup = nsup, rater_id = rater_id, **kwargs)
     mydataset.add_attrib('basic', attrib_basic, {})
 
     valset = ValidationDataset(mydataset, test_classes = act_labels, npart = npart)

@@ -35,7 +35,19 @@ DATASET_INFO = {
                 0: set([1,6]  ), # upper_abdomen: spleen + liver as training, kidneis are testing
                 1: set( [2,3] ), # lower_abdomen
                     }
-            }
+            },
+    
+    "CURVAS": {
+            'PSEU_LABEL_NAME': ["BGD", "SUPFG"],
+            'REAL_LABEL_NAME': ["BGD", "PANCREAS", "KIDNEY", "LIVER"],
+            '_SEP': [0, 4, 8, 12, 16, 20],
+            'MODALITY': 'CT',
+            'LABEL_GROUP':{
+                'pa_all': set([1, 2, 3]),
+                0: set([1, 3]), # upper_abdomen: pancreas + liver as training, kidneys are testing
+                1: set([2]), # lower_abdomen
+                    }
+    }
 
 }
 

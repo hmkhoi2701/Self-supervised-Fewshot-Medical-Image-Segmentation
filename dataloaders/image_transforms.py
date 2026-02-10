@@ -3,7 +3,7 @@ Image transforms functions for data augmentation
 Credit to Dr. Jo Schlemper
 """
 
-from collections import Sequence
+from collections.abc import Sequence
 import cv2
 import numpy as np
 import scipy
@@ -246,7 +246,7 @@ def elastic_transform_nd(image, alpha, sigma, random_state=None, order=1, lazy=F
     dy = np.transpose(dy, axes=(-2, -1) + tuple(range(len(dim))))
 
     coord = np.meshgrid(*[np.arange(shape_i) for shape_i in (shape[1], shape[0]) + dim])
-    indices = [np.reshape(e+de, (-1, 1)) for e, de in zip([coord[1], coord[0]] + coord[2:],
+    indices = [np.reshape(e+de, (-1, 1)) for e, de in zip([coord[1], coord[0]] + list(coord[2:]),
                                                           [dy, dx] + [0] * len(dim))]
 
     if lazy:

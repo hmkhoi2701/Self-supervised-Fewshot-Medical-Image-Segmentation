@@ -62,6 +62,7 @@ def cfg():
     support_idx=[-1] # indicating which scan is used as support in testing. 
     val_wsize=2 # L_H, L_W in testing
     n_sup_part = 3 # number of chuncks in testing
+    rater_id = 1 # which rater to use as pseudo label in training
 
     # Network
     modelname = 'dlfcn_res101' # resnet 101 backbone from torchvision fcn-deeplab
@@ -115,6 +116,8 @@ def cfg():
         'SABS_Superpix':{'data_dir': "./data/SABS/sabs_CT_normalized"},
         'C0_Superpix':{'data_dir': "feed your dataset path here"},
         'CHAOST2_Superpix':{'data_dir': "./data/CHAOST2/chaos_MR_T2_normalized/"},
+        'CURVAS':{'data_dir': "/home/khoi.ho/MICCAI_26/Personalized-FS/data/CURVAS/curvas_CT_normalized"},
+        'CURVAS_Superpix':{'data_dir': "/home/khoi.ho/MICCAI_26/Personalized-FS/data/CURVAS/curvas_CT_normalized"}
         }
 
 

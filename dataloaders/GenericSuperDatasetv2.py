@@ -20,7 +20,7 @@ from pdb import set_trace
 from util.utils import CircularList
 
 class SuperpixelDataset(BaseDataset):
-    def __init__(self, which_dataset, base_dir, idx_split, mode, transforms, scan_per_load, num_rep = 2, min_fg = '', nsup = 1, fix_length = None, tile_z_dim = 3, exclude_list = [], superpix_scale = 'SMALL', **kwargs):
+    def __init__(self, which_dataset, base_dir, idx_split, mode, transforms, scan_per_load, num_rep = 2, min_fg = '', nsup = 1, fix_length = None, tile_z_dim = 3, exclude_list = [], superpix_scale = 'SMALL', rater_id = 1, **kwargs):
         """
         Pseudolabel dataset
         Args:
@@ -61,6 +61,7 @@ class SuperpixelDataset(BaseDataset):
         # experiment configs
         self.exclude_lbs = exclude_list
         self.superpix_scale = superpix_scale
+        self.rater_id = rater_id
         if len(exclude_list) > 0:
             print(f'###### Dataset: the following classes has been excluded {exclude_list}######')
         self.idx_split = idx_split

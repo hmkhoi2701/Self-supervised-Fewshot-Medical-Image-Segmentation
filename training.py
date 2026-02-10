@@ -59,6 +59,8 @@ def main(_run, _config, _log):
         baseset_name = 'C0'
     elif data_name == 'CHAOST2_Superpix':
         baseset_name = 'CHAOST2'
+    elif data_name == 'CURVAS_Superpix':
+        baseset_name = 'CURVAS'
     else:
         raise ValueError(f'Dataset: {data_name} not found')
 
@@ -81,6 +83,7 @@ def main(_run, _config, _log):
         scan_per_load = _config['scan_per_load'],
         exclude_list = _config["exclude_cls_list"],
         superpix_scale = _config["superpix_scale"],
+        rater_id=_config["rater_id"],
         fix_length = _config["max_iters_per_load"] if (data_name == 'C0_Superpix') or (data_name == 'CHAOST2_Superpix') else None
     )
 

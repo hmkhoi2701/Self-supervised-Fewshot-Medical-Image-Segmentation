@@ -20,7 +20,7 @@ from pdb import set_trace
 from util.utils import CircularList
 
 class ManualAnnoDataset(BaseDataset):
-    def __init__(self, which_dataset, base_dir, idx_split, mode, transforms, scan_per_load, min_fg = '', fix_length = None, tile_z_dim = 3, nsup = 1, exclude_list = [], extern_normalize_func = None,**kwargs):
+    def __init__(self, which_dataset, base_dir, idx_split, mode, transforms, scan_per_load, min_fg = '', fix_length = None, tile_z_dim = 3, nsup = 1, exclude_list = [], extern_normalize_func = None, rater_id = None,**kwargs):
         """
         Manually labeled dataset
         Args:
@@ -62,6 +62,7 @@ class ManualAnnoDataset(BaseDataset):
         self.min_fg = min_fg if isinstance(min_fg, str) else str(min_fg)
 
         self.scan_per_load = scan_per_load
+        self.rater_id = rater_id
 
         self.info_by_scan = None
         self.img_lb_fids = self.organize_sample_fids() # information of scans of the entire fold
@@ -121,7 +122,10 @@ class ManualAnnoDataset(BaseDataset):
             curr_dict = {}
 
             _img_fid = os.path.join(self.base_dir, f'image_{curr_id}.nii.gz')
-            _lb_fid  = os.path.join(self.base_dir, f'label_{curr_id}.nii.gz')
+            if self.rater_id is not None:
+                _lb_fid  = os.path.join(self.base_dir, f'label_{curr_id}_{self.rater_id}.nii.gz')
+            else:
+                _lb_fid  = os.path.join(self.base_dir, f'label_{curr_id}.nii.gz')
 
             curr_dict["img_fid"] = _img_fid
             curr_dict["lbs_fid"] = _lb_fid
@@ -372,7 +376,6 @@ class ManualAnnoDataset(BaseDataset):
             pcts = [ half_part + part_interval * ii for ii in range(npart) ]
 
         print(f'###### Parts percentage: {pcts} ######')
-
         out_buffer = [] # [{scanid, img, lb}]
         for _part in range(npart):
             concat_buffer = [] # for each fold do a concat in image and mask in batch dimension

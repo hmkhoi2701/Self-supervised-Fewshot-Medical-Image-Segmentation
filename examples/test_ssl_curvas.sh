@@ -1,24 +1,24 @@
 #!/bin/bash
-# train a model to segment abdominal MRI 
+# train a model to segment abdominal CT
 GPUID1=0
 export CUDA_VISIBLE_DEVICES=$GPUID1
 
 ####### Shared configs ######
 PROTO_GRID=8 # using 32 / 8 = 4, 4-by-4 prototype pooling window during training
 CPT="myexp"
-DATASET='CHAOST2_Superpix'
+DATASET='CURVAS_Superpix'
 NWORKER=4
 
-ALL_EV=( 0 1 2 3 4) # 5-fold cross validation (0, 1, 2, 3, 4)
+ALL_EV=( 0) # 5-fold cross validation (0, 1, 2, 3, 4)
 ALL_SCALE=( "MIDDLE") # config of pseudolabels
 
 ### Use L/R kidney as testing classes
 LABEL_SETS=0 
-EXCLU='[2,3]' # setting 2: excluding kidneies in training set to test generalization capability even though they are unlabeled. Use [] for setting 1 by Roy et al.
+EXCLU='[1,3]' # setting 2: excluding kidneies in training set to test generalization capability even though they are unlabeled. Use [] for setting 1 by Roy et al.
 
 ### Use Liver and spleen as testing classes
 # LABEL_SETS=1 
-# EXCLU='[1,4]' 
+# EXCLU='[1,6]' 
 
 ###### Training configs (irrelavent in testing) ######
 NSTEP=100100
@@ -29,7 +29,8 @@ SNAPSHOT_INTERVAL=25000 # interval for saving snapshot
 SEED='1234'
 
 ###### Validation configs ######
-SUPP_ID='[4]'  # using the additionally loaded scan as support
+SUPP_ID='[-1]' # using the additionally loaded scan as support
+RATER=3
 
 echo ===================================
 
@@ -46,7 +47,7 @@ do
         mkdir $LOGDIR
     fi
 
-    RELOAD_PATH='./exps/myexperiments_MIDDLE_0/mySSL_train_CHAOST2_Superpix_lbgroup0_scale_MIDDLE_vfold0_CHAOST2_Superpix_sets_0_1shot/2/snapshots/100000.pth' # path to the reloaded model
+    RELOAD_PATH='/home/khoi.ho/MICCAI_26/benchmarks/Self-supervised-Fewshot-Medical-Image-Segmentation/exps/myexp_MIDDLE_0/mySSL_train_CURVAS_Superpix_lbgroup0_scale_MIDDLE_vfold0_CURVAS_Superpix_sets_0_1shot/3/snapshots/50000.pth' # path to the reloaded model
 
     python3 validation.py with \
     'modelname=dlfcn_res101' \
@@ -70,6 +71,7 @@ do
     superpix_scale=$SUPERPIX_SCALE \
     lr_step_gamma=$DECAY \
     path.log_dir=$LOGDIR \
-    support_idx=$SUPP_ID
+    support_idx=$SUPP_ID \
+    rater_id=$RATER
     done
 done
