@@ -40,7 +40,17 @@ DATASET_INFO = {
     "CURVAS": {
             'PSEU_LABEL_NAME': ["BGD", "SUPFG"],
             'REAL_LABEL_NAME': ["BGD", "PANCREAS", "KIDNEY", "LIVER"],
-            '_SEP': [0, 4, 8, 12, 16, 20],
+            'MODALITY': 'CT',
+            'LABEL_GROUP':{
+                'pa_all': set([1, 2, 3]),
+                0: set([1, 3]), # upper_abdomen: pancreas + liver as training, kidneys are testing
+                1: set([2]), # lower_abdomen
+                    }
+    },
+    
+    "CURVAS_Superpix": {
+            'PSEU_LABEL_NAME': ["BGD", "SUPFG"],
+            'REAL_LABEL_NAME': ["BGD", "PANCREAS", "KIDNEY", "LIVER"],
             'MODALITY': 'CT',
             'LABEL_GROUP':{
                 'pa_all': set([1, 2, 3]),

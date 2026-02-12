@@ -30,7 +30,7 @@ SEED='1234'
 
 ###### Validation configs ######
 SUPP_ID='[-1]' # using the additionally loaded scan as support
-RATER=3
+RATER=2
 
 echo ===================================
 
@@ -47,7 +47,7 @@ do
         mkdir $LOGDIR
     fi
 
-    RELOAD_PATH='/home/khoi.ho/MICCAI_26/benchmarks/Self-supervised-Fewshot-Medical-Image-Segmentation/exps/myexp_MIDDLE_0/mySSL_train_CURVAS_Superpix_lbgroup0_scale_MIDDLE_vfold0_CURVAS_Superpix_sets_0_1shot/3/snapshots/50000.pth' # path to the reloaded model
+    RELOAD_PATH='/home/khoi.ho/MICCAI_26/benchmarks/Self-supervised-Fewshot-Medical-Image-Segmentation/exps/myexp_MIDDLE_0/mySSL_train_CURVAS_Superpix_lbgroup0_scale_MIDDLE_vfold0_CURVAS_Superpix_sets_0_1shot/7/snapshots/50000.pth' # path to the reloaded model
 
     python3 validation.py with \
     'modelname=dlfcn_res101' \

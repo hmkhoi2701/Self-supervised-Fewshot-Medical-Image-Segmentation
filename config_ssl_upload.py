@@ -52,7 +52,7 @@ def cfg():
     input_size = (256, 256)
     min_fg_data='100' # when training with manual annotations, indicating number of foreground pixels in a single class single slice. This empirically stablizes the training process
     label_sets = 0 # which group of labels taking as training (the rest are for testing)
-    exclude_cls_list = [2, 3] # testing classes to be excluded in training. Set to [] if testing under setting 1
+    exclude_cls_list = [2] # testing classes to be excluded in training. Set to [] if testing under setting 1
     usealign = True # see vanilla PANet
     use_wce = True
 
@@ -116,7 +116,7 @@ def cfg():
         'SABS_Superpix':{'data_dir': "./data/SABS/sabs_CT_normalized"},
         'C0_Superpix':{'data_dir': "feed your dataset path here"},
         'CHAOST2_Superpix':{'data_dir': "./data/CHAOST2/chaos_MR_T2_normalized/"},
-        'CURVAS':{'data_dir': "/home/khoi.ho/MICCAI_26/Personalized-FS/data/CURVAS/curvas_CT_normalized"},
+        'CURVAS':{'data_dir': "/home/khoi.ho/MICCAI_26/Personalized-FS/data/CURVAS/curvas_CT_normalized_test"},
         'CURVAS_Superpix':{'data_dir': "/home/khoi.ho/MICCAI_26/Personalized-FS/data/CURVAS/curvas_CT_normalized"}
         }
 

@@ -40,7 +40,7 @@ class SuperpixelDataset(BaseDataset):
         super(SuperpixelDataset, self).__init__(base_dir)
 
         self.img_modality = DATASET_INFO[which_dataset]['MODALITY']
-        self.sep = DATASET_INFO[which_dataset]['_SEP']
+        self.sep = DATASET_INFO[which_dataset].get('_SEP', None)
         self.pseu_label_name = DATASET_INFO[which_dataset]['PSEU_LABEL_NAME']
         self.real_label_name = DATASET_INFO[which_dataset]['REAL_LABEL_NAME']
 
@@ -96,6 +96,9 @@ class SuperpixelDataset(BaseDataset):
         Args:
             idx_split: index for spliting cross-validation folds
         """
+        if self.sep is None:
+            print("We are not using the split, using all scans")
+            return self.img_pids
         val_ids  = copy.deepcopy(self.img_pids[self.sep[idx_split]: self.sep[idx_split + 1] + self.nsup])
         if mode == 'train':
             return [ ii for ii in self.img_pids if ii not in val_ids ]

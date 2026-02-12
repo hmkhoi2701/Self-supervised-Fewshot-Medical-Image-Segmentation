@@ -39,7 +39,7 @@ class ManualAnnoDataset(BaseDataset):
         """
         super(ManualAnnoDataset, self).__init__(base_dir)
         self.img_modality = DATASET_INFO[which_dataset]['MODALITY']
-        self.sep = DATASET_INFO[which_dataset]['_SEP']
+        self.sep = DATASET_INFO[which_dataset].get('_SEP', None)
         self.label_name = DATASET_INFO[which_dataset]['REAL_LABEL_NAME']
         self.transforms = transforms
         self.is_train = True if mode == 'train' else False
@@ -90,6 +90,9 @@ class ManualAnnoDataset(BaseDataset):
         self.update_subclass_lookup()
 
     def get_scanids(self, mode, idx_split):
+        if self.sep is None:
+            print("We are not using the split, using all scans")
+            return self.img_pids
         val_ids  = copy.deepcopy(self.img_pids[self.sep[idx_split]: self.sep[idx_split + 1] + self.nsup])
         self.potential_support_sid = val_ids[-self.nsup:] # this is actual file scan id, not index
         if mode == 'train':
